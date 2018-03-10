@@ -61,3 +61,26 @@ void eqCirc(int xc, int yc, int r)
     glEnd();
     glFlush();
 }
+
+void eqSemiCirc(int xc, int yc, int r, int dir)
+{
+    int x, y;
+    glBegin(GL_POINTS);
+    if(dir==1){
+        for(x = xc; x<=r+xc; x++){
+            y = yc + sqrt(r*r-(x-xc)*(x-xc));
+            glVertex2i(x, y);
+            y = yc - sqrt(r*r-(x-xc)*(x-xc));
+            glVertex2i(x, y);
+        }
+    } else {
+        for(x = xc; x>=xc-r; x--){
+            y = yc + sqrt(r*r-(x-xc)*(x-xc));
+            glVertex2i(x, y);
+            y = yc - sqrt(r*r-(x-xc)*(x-xc));
+            glVertex2i(x, y);
+        }
+    }
+    glEnd();
+    glFlush();
+}

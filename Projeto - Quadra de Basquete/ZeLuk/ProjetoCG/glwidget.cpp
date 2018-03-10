@@ -41,12 +41,14 @@ void GLWidget::paintGL() {
         for(int i = 0; i < secondPoint.size(); i++ ){
             eqReta(firstPoint[i].first,firstPoint[i].second,secondPoint[i].first,secondPoint[i].second); //mudar pra equação da reta
         }
-        eqCirc(300,200,20);
+        drawCourt(eqReta, eqCirc, eqSemiCirc);
+
     } else if (_eqRetaOrBresenham == BRESENHAM){
         for(int i = 0; i < secondPoint.size(); i++ ){
             bresenham(firstPoint[i].first,firstPoint[i].second,secondPoint[i].first,secondPoint[i].second);
         }
-        bresenham_circle(300,200,20);
+        drawCourt(bresenham, bresenham_circle, bresenham_semi_circle);
+
     }
 
 
@@ -76,4 +78,35 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
    // QMessageBox::information(this,"tam",QString::number(secondPoint.size()));
 }
 
+void drawCourt(void (*reta)(int,int,int,int), void (*circ)(int,int,int), void (*semiCirc)(int,int,int,int))
+{
+    reta(160,25,440,25);
+    reta(160,175,440,175);
+    reta(160,25,160,175);
+    reta(440,25,440,175);
+
+    circ(300,100,18);
+    reta(300,25,300,175);
+
+    semiCirc(424,100,67,-1);
+    reta(424,167,440,167);
+    reta(424,33,440,33);
+
+    semiCirc(176,100,67,1);
+    reta(160,167,176,167);
+    reta(160,33,176,33);
+
+    circ(220,100,18);
+    reta(220,75,220,125);
+    reta(160,75,220,75);
+    reta(160,125,220,125);
+
+    circ(380,100,18);
+    reta(380,75,380,125);
+    reta(380,75,440,75);
+    reta(380,125,440,125);
+
+
+
+}
 

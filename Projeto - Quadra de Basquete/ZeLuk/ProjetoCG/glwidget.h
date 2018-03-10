@@ -29,4 +29,5 @@ private:
     bool firstClick = true;
 };
 
+void drawCourt(void (*reta)(int,int,int,int), void (*circ)(int,int,int), void (*semiCirc)(int,int,int,int));
 #endif // GLWIDGET_H

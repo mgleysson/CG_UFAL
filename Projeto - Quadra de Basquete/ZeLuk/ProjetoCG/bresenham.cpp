@@ -84,14 +84,14 @@ void bresenham(int x0, int y0, int x1, int y1)
 void plot_pointCirc(int xc, int yc, int x, int y)
 {
   glBegin(GL_POINTS);
-  glVertex2i(xc+x, yc+y);
-  glVertex2i(xc+x, yc-y);
+  glVertex2i(xc+x, yc+y);//1 quadrante
   glVertex2i(xc+y, yc+x);
-  glVertex2i(xc+y, yc-x);
-  glVertex2i(xc-x, yc-y);
-  glVertex2i(xc-y, yc-x);
-  glVertex2i(xc-x, yc+y);
+  glVertex2i(xc-x, yc+y);//2 quadrante
   glVertex2i(xc-y, yc+x);
+  glVertex2i(xc-x, yc-y);//3 quadrante
+  glVertex2i(xc-y, yc-x);
+  glVertex2i(xc+x, yc-y);//4 quadrante
+  glVertex2i(xc+y, yc-x);
   glEnd();
 }
 
@@ -123,4 +123,40 @@ void bresenham_circle(int xc, int yc, int r)
 }
 
 
+void bresenham_semi_circle(int xc, int yc, int r, int dir)
+{
+    int x=0,y=r;
+    float pk=(5.0/4.0)-r;
 
+    /* Plot the points */
+    /* Plot the first point */
+    plot_pointCirc(xc, yc, x, y);
+    int k;
+    /* Find all vertices till x=y */
+    glBegin(GL_POINTS);
+    while(x < y)
+    {
+      x = x + 1;
+      if(pk < 0)
+        pk = pk + 2*x+1;
+      else
+      {
+        y = y - 1;
+        pk = pk + 2*(x - y) + 1;
+      }
+      if(dir == 1) {
+          glVertex2i(xc+x, yc+y);//1 quadrante
+          glVertex2i(xc+y, yc+x);
+          glVertex2i(xc+x, yc-y);//4 quadrante
+          glVertex2i(xc+y, yc-x);
+      } else {
+          glVertex2i(xc-x, yc+y);//2 quadrante
+          glVertex2i(xc-y, yc+x);
+          glVertex2i(xc-x, yc-y);//3 quadrante
+          glVertex2i(xc-y, yc-x);
+      }
+
+    }
+    glEnd();
+    glFlush();
+}
