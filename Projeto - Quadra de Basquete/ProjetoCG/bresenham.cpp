@@ -105,7 +105,6 @@ void bresenham_circle(int xc, int yc, int r)
   /* Plot the points */
   /* Plot the first point */
   plot_pointCirc(xc, yc, x, y);
-  int k;
   /* Find all vertices till x=y */
   while(x < y)
   {
@@ -127,13 +126,22 @@ void bresenham_semi_circle(int xc, int yc, int r, int dir)
 {
     int x=0,y=r;
     float pk=(5.0/4.0)-r;
-
+    glBegin(GL_POINTS);
     /* Plot the points */
     /* Plot the first point */
-    plot_pointCirc(xc, yc, x, y);
-    int k;
+    if(dir == 1) {
+        glVertex2i(xc+x, yc+y);//1 quadrante
+        glVertex2i(xc+y, yc+x);
+        glVertex2i(xc+x, yc-y);//4 quadrante
+        glVertex2i(xc+y, yc-x);
+    } else {
+        glVertex2i(xc-x, yc+y);//2 quadrante
+        glVertex2i(xc-y, yc+x);
+        glVertex2i(xc-x, yc-y);//3 quadrante
+        glVertex2i(xc-y, yc-x);
+    }
     /* Find all vertices till x=y */
-    glBegin(GL_POINTS);
+
     while(x < y)
     {
       x = x + 1;
