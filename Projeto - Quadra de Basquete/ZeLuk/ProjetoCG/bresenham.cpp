@@ -80,6 +80,47 @@ void bresenham(int x0, int y0, int x1, int y1)
 }
 
 
+// Plot eight points using circle's symmetrical property
+void plot_pointCirc(int xc, int yc, int x, int y)
+{
+  glBegin(GL_POINTS);
+  glVertex2i(xc+x, yc+y);
+  glVertex2i(xc+x, yc-y);
+  glVertex2i(xc+y, yc+x);
+  glVertex2i(xc+y, yc-x);
+  glVertex2i(xc-x, yc-y);
+  glVertex2i(xc-y, yc-x);
+  glVertex2i(xc-x, yc+y);
+  glVertex2i(xc-y, yc+x);
+  glEnd();
+}
+
+// Function to draw a circle using bresenham's
+// circle drawing algorithm
+void bresenham_circle(int xc, int yc, int r)
+{
+  int x=0,y=r;
+  float pk=(5.0/4.0)-r;
+
+  /* Plot the points */
+  /* Plot the first point */
+  plot_pointCirc(xc, yc, x, y);
+  int k;
+  /* Find all vertices till x=y */
+  while(x < y)
+  {
+    x = x + 1;
+    if(pk < 0)
+      pk = pk + 2*x+1;
+    else
+    {
+      y = y - 1;
+      pk = pk + 2*(x - y) + 1;
+    }
+    plot_pointCirc(xc, yc, x, y);
+  }
+  glFlush();
+}
 
 
 

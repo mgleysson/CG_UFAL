@@ -22,7 +22,7 @@ void plot_pointCirc(int xc, int yc, int x, int y)
 
 // Function to draw a circle using bresenham's
 // circle drawing algorithm
-void bresenham_circle(int xc, int yc, int r)
+void bresenham_circle(int r)
 {
   int x=0,y=r;
   float pk=(5.0/4.0)-r;

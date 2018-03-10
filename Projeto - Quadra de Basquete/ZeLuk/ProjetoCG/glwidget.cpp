@@ -5,6 +5,7 @@
 #include <utility>
 #include <bresenham.h>
 #include "defines.h"
+#include "eqretacirc.h"
 
 
 float _color[3] = {0,0,0};
@@ -38,12 +39,14 @@ void GLWidget::paintGL() {
     glPointSize(_tam);
     if(_eqRetaOrBresenham == EQRETA){
         for(int i = 0; i < secondPoint.size(); i++ ){
-            bresenham(firstPoint[i].first,firstPoint[i].second,secondPoint[i].first,secondPoint[i].second); //mudar pra equação da reta
+            eqReta(firstPoint[i].first,firstPoint[i].second,secondPoint[i].first,secondPoint[i].second); //mudar pra equação da reta
         }
+        eqCirc(300,200,20);
     } else if (_eqRetaOrBresenham == BRESENHAM){
         for(int i = 0; i < secondPoint.size(); i++ ){
             bresenham(firstPoint[i].first,firstPoint[i].second,secondPoint[i].first,secondPoint[i].second);
         }
+        bresenham_circle(300,200,20);
     }
 
 

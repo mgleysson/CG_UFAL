@@ -27,13 +27,15 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     glwidget.cpp \
-    bresenham.cpp
+    bresenham.cpp \
+    eqretacirc.cpp
 
 HEADERS += \
         mainwindow.h \
     glwidget.h \
     bresenham.h \
-    defines.h
+    defines.h \
+    eqretacirc.h
 
 FORMS += \
         mainwindow.ui
