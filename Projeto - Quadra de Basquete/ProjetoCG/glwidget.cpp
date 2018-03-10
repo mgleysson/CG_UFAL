@@ -7,59 +7,51 @@
 #include "defines.h"
 #include "eqretacirc.h"
 
-
 float _color[3] = {0,0,0};
 int _tam = 1;
 int _eqRetaOrBresenham = EQRETA;
-
+int _x,_y;
 
 GLWidget::GLWidget(QWidget *parent):
     QGLWidget(parent)
 {
-    connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));//updateGL() chama a paintGL() pra atualizar
+    connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     timer.start(50);
 }
 
 void GLWidget::initializeGL() {
     glClearColor(0.2, 0.2, 0.2, 0.0);
-   // glMatrixMode(GL_PROJECTION);
-   // glLoadIdentity();
     gluOrtho2D(0, WIDTH, 0, HEIGHT);
     glViewport(0, 0, WIDTH, HEIGHT);
-   // glMatrixMode(GL_MODELVIEW);
-
 }
 
 void GLWidget::paintGL() {
-    //float f = (float)(c++%10)/10;
-    //glClearColor(0, f, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glColor3f(_color[0], _color[1], _color[2]);
     glPointSize(_tam);
+    if(!firstClick){
+        if(_eqRetaOrBresenham == EQRETA)
+            eqReta(firstPoint[firstPoint.size()-1].first,firstPoint[firstPoint.size()-1].second,_x,_y);
+        else
+            bresenham(firstPoint[firstPoint.size()-1].first,firstPoint[firstPoint.size()-1].second,_x,_y);
+
+    }
     if(_eqRetaOrBresenham == EQRETA){
         for(int i = 0; i < secondPoint.size(); i++ ){
             eqReta(firstPoint[i].first,firstPoint[i].second,secondPoint[i].first,secondPoint[i].second); //mudar pra equação da reta
         }
         drawCourt(eqReta, eqCirc, eqSemiCirc);
-
     } else if (_eqRetaOrBresenham == BRESENHAM){
         for(int i = 0; i < secondPoint.size(); i++ ){
             bresenham(firstPoint[i].first,firstPoint[i].second,secondPoint[i].first,secondPoint[i].second);
         }
         drawCourt(bresenham, bresenham_circle, bresenham_semi_circle);
-
     }
-
-
-
     glFlush();
-
 }
 
-void GLWidget::resizeGL(int w, int h){
-
-}
+void GLWidget::resizeGL(int w, int h){}
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
@@ -73,9 +65,11 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
         secondPoint.push_back(point);
         firstClick = true;
     }
-    updateGL();
-   // QMessageBox::information(this,"Tittle","x="+QString::number(point.first)+"\ny="+QString::number(point.second));
-   // QMessageBox::information(this,"tam",QString::number(secondPoint.size()));
+}
+
+void GLWidget::mouseMoveEvent(QMouseEvent *event){
+    _x = event->x();
+    _y = 399-event->y();
 }
 
 void drawCourt(void (*reta)(int,int,int,int), void (*circ)(int,int,int), void (*semiCirc)(int,int,int,int))
@@ -105,8 +99,5 @@ void drawCourt(void (*reta)(int,int,int,int), void (*circ)(int,int,int), void (*
     reta(380,75,380,125);
     reta(380,75,440,75);
     reta(380,125,440,125);
-
-
-
 }
 

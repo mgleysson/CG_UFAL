@@ -20,6 +20,7 @@ public:
     void paintGL();
     void resizeGL(int w, int h);
     void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 
 private:
     QTimer timer;
