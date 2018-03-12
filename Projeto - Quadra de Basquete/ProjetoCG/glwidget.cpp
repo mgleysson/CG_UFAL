@@ -11,6 +11,7 @@ float _color[3] = {0,0,0};
 int _tam = 1;
 int _eqRetaOrBresenham = EQRETA;
 int _x,_y;
+bool _clear=false, _undo=false;
 
 GLWidget::GLWidget(QWidget *parent):
     QGLWidget(parent)
@@ -20,7 +21,7 @@ GLWidget::GLWidget(QWidget *parent):
 }
 
 void GLWidget::initializeGL() {
-    glClearColor(0.2, 0.2, 0.2, 0.0);
+    glClearColor(0.5, 0.5, 0.5, 0.0);
     gluOrtho2D(0, WIDTH, 0, HEIGHT);
     glViewport(0, 0, WIDTH, HEIGHT);
 }
@@ -30,6 +31,31 @@ void GLWidget::paintGL() {
 
     glColor3f(_color[0], _color[1], _color[2]);
     glPointSize(_tam);
+
+    if(_undo){
+        _undo = false;
+        if(firstPoint.size()>=1){
+            if(firstClick){
+                firstPoint.pop_back();
+                secondPoint.pop_back();
+            } else {
+                firstClick = true;
+                firstPoint.pop_back();
+            }
+        }
+    }
+    if(_clear){
+        _clear = false;
+        if(firstClick){
+            firstPoint.clear();
+            secondPoint.clear();
+        } else {
+            firstClick = true;
+            firstPoint.clear();
+            secondPoint.clear();
+        }
+    }
+
     if(!firstClick){
         if(_eqRetaOrBresenham == EQRETA)
             eqReta(firstPoint[firstPoint.size()-1].first,firstPoint[firstPoint.size()-1].second,_x,_y);
@@ -71,6 +97,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event){
     _x = event->x();
     _y = 399-event->y();
 }
+
 
 void drawCourt(void (*reta)(int,int,int,int), void (*circ)(int,int,int), void (*semiCirc)(int,int,int,int))
 {

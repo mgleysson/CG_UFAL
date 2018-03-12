@@ -10,6 +10,8 @@
 extern float _color[3];
 extern int _tam;
 extern int _eqRetaOrBresenham;
+extern bool _clear;
+extern bool _undo;
 
 class GLWidget : public QGLWidget
 {

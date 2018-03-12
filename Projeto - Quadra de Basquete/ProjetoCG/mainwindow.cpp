@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle("CG OpenGL Project");
 }
 
 MainWindow::~MainWindow()
@@ -26,4 +25,14 @@ void MainWindow::on_pushButton_clicked()
     _color[1] = ui->doubleSpinBox_2->value();
     _color[2] = ui->doubleSpinBox_3->value();
     _tam = ui->spinBox->value();
+}
+
+void MainWindow::on_pushButton2_clicked()
+{
+    _undo = true;
+}
+
+void MainWindow::on_pushButton3_clicked()
+{
+    _clear = true;
 }
